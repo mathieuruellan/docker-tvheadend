@@ -18,15 +18,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D4
 RUN echo deb http://dl.bintray.com/tvheadend/ubuntu stable main | tee -a /etc/apt/sources.list
 RUN \
 	apt-get update -y && \
-	apt-get install -y xmltv xmltv-util udev && \
+	apt-get install -y xmltv xmltv-util udev bzip2 && \
 	apt-get install -y --force-yes tvheadend && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
-
-
-RUN \
-  apt-get update -y && \
-  apt-get install -y tar bzip2 && \
-  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 EXPOSE 9981 9982
 
