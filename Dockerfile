@@ -20,7 +20,7 @@ RUN \
 	apt-get update -y && \
 	apt-get install -y xmltv xmltv-util udev bzip2 && \
 	apt-get install -y --force-yes tvheadend && \
-	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 EXPOSE 9981 9982
 
