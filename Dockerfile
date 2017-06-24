@@ -7,7 +7,7 @@
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
-FROM debian:jessie
+FROM debian:jessie-slim
 MAINTAINER Mathieu Ruellan <mathieu.ruellan@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
