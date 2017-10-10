@@ -14,20 +14,31 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /
 
 
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61  
+RUN \
+	apt-get update -y && \
+	apt-get install -y gnupg2 gnupg && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
 RUN echo deb http://dl.bintray.com/tvheadend/ubuntu stable main | tee -a /etc/apt/sources.list
+
+RUN echo deb http://ftp.fr.debian.org/debian/ stable main contrib non-free | tee -a /etc/apt/sources.list
+RUN echo deb http://ftp.fr.debian.org/debian/ testing main contrib non-free | tee -a /etc/apt/sources.list
+RUN echo deb http://ftp.fr.debian.org/debian/ unstable main contrib non-free | tee -a /etc/apt/sources.list
+RUN echo deb http://security.debian.org/debian-security testing/updates main | tee -a /etc/apt/sources.list
+
 RUN \
 	apt-get update -y && \
 	apt-get install -y xmltv xmltv-util udev bzip2 && \
 	apt-get install -y --force-yes tvheadend && \
-	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 9981 9982
 
-VOLUME /config 
-VOLUME /recordings 
-VOLUME /data 
-VOLUME /logos 
+VOLUME /config
+VOLUME /recordings
+VOLUME /data
+VOLUME /logos
 VOLUME /timeshift
 VOLUME /.xmltv
 
