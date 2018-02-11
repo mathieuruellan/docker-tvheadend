@@ -27,11 +27,16 @@ RUN echo deb http://ftp.fr.debian.org/debian/ testing main contrib non-free | te
 RUN echo deb http://ftp.fr.debian.org/debian/ unstable main contrib non-free | tee -a /etc/apt/sources.list
 RUN echo deb http://security.debian.org/debian-security testing/updates main | tee -a /etc/apt/sources.list
 
+
 RUN \
 	apt-get update -y && \
 	apt-get install -y xmltv xmltv-util udev bzip2 && \
 	apt-get install -y --force-yes tvheadend && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+ADD tv_grab_fr_telerama /usr/bin/tv_grab_fr
+RUN chmod a+x /usr/bin/tv_grab_fr
 
 EXPOSE 9981 9982
 
