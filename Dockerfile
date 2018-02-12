@@ -7,7 +7,7 @@
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
-FROM debian:jessie-slim
+FROM debian:stretch-slim
 MAINTAINER Mathieu Ruellan <mathieu.ruellan@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -16,24 +16,16 @@ ENV HOME /
 
 RUN \
 	apt-get update -y && \
-	apt-get install -y gnupg2 gnupg && \
+	apt-get install -y gnupg2 gnupg dirmngr apt-transport-https && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
-RUN echo deb http://dl.bintray.com/tvheadend/ubuntu stable main | tee -a /etc/apt/sources.list
-
-RUN echo deb http://ftp.fr.debian.org/debian/ stable main contrib non-free | tee -a /etc/apt/sources.list
-RUN echo deb http://ftp.fr.debian.org/debian/ testing main contrib non-free | tee -a /etc/apt/sources.list
-RUN echo deb http://ftp.fr.debian.org/debian/ unstable main contrib non-free | tee -a /etc/apt/sources.list
-RUN echo deb http://security.debian.org/debian-security testing/updates main | tee -a /etc/apt/sources.list
-
+RUN echo "deb https://dl.bintray.com/tvheadend/deb stretch stable-4.2" | tee -a /etc/apt/sources.list
 
 RUN \
 	apt-get update -y && \
-	apt-get install -y xmltv xmltv-util udev bzip2 && \
-	apt-get install -y --force-yes tvheadend && \
+	apt-get install -y tvheadend xmltv xmltv-util udev bzip2 && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 
 ADD tv_grab_fr_telerama /usr/bin/tv_grab_fr
 RUN chmod a+x /usr/bin/tv_grab_fr
